@@ -1,0 +1,830 @@
+<!-- Секция 1: Флаг (обложка + навигация) -->
+<section id="vb-q7x" class="vb-q7x" data-vibeblock-unique-section="yes" data-section-name="Флаг" aria-labelledby="vb-q7x-title">
+  <style>
+    .vb-q7x,
+    .vb-q7x * { box-sizing: border-box; }
+    .vb-q7x input,
+    .vb-q7x textarea,
+    .vb-q7x select { font: inherit; }
+
+    .vb-q7x {
+      position: relative;
+      min-height: 100vh;
+      scroll-margin-top: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 112px clamp(16px, 5vw, 64px) clamp(64px, 9vh, 96px);
+      font-family: var(--t-text-font);
+      color: #4B5A85;
+      background-color: #E9EEF8;
+      background-image:
+        radial-gradient(900px 520px at 12% 18%, rgba(241, 166, 163, .38), transparent 62%),
+        radial-gradient(760px 620px at 88% 82%, rgba(127, 163, 218, .34), transparent 60%),
+        radial-gradient(620px 420px at 62% 4%, rgba(247, 209, 131, .22), transparent 65%);
+      overflow: hidden;
+    }
+
+    /* --- декоративные «глиняные» сферы --- */
+    .vb-q7x__orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .vb-q7x__orb--red {
+      width: 140px; height: 140px;
+      top: 16%; left: 6%;
+      background: #F1A6A3;
+      box-shadow: 18px 18px 34px rgba(196, 120, 118, .35), -8px -8px 20px rgba(255, 255, 255, .8), inset 8px 8px 16px rgba(255, 255, 255, .55), inset -10px -10px 18px rgba(180, 95, 95, .3);
+      opacity: .8;
+    }
+    .vb-q7x__orb--gold {
+      width: 92px; height: 92px;
+      bottom: 14%; right: 9%;
+      background: #F7D183;
+      box-shadow: 14px 14px 28px rgba(206, 165, 84, .35), -6px -6px 16px rgba(255, 255, 255, .85), inset 6px 6px 12px rgba(255, 255, 255, .6), inset -8px -8px 14px rgba(196, 152, 70, .3);
+      opacity: .75;
+    }
+    .vb-q7x__orb--blue {
+      width: 64px; height: 64px;
+      top: 24%; right: 14%;
+      background: #7FA3DA;
+      box-shadow: 12px 12px 24px rgba(96, 126, 184, .35), -6px -6px 14px rgba(255, 255, 255, .8), inset 6px 6px 12px rgba(255, 255, 255, .45), inset -7px -7px 14px rgba(72, 100, 156, .35);
+      opacity: .7;
+    }
+
+    /* --- навигация по страницам --- */
+    .vb-q7x-nav {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 40;
+      display: flex;
+      gap: 7px;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(248, 250, 254, .94);
+      box-shadow: 10px 10px 26px rgba(74, 94, 140, .2), -6px -6px 16px rgba(255, 255, 255, .95), inset 3px 3px 8px rgba(255, 255, 255, .9), inset -4px -4px 10px rgba(120, 145, 195, .18);
+    }
+    .vb-q7x-nav__dot {
+      position: relative;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      text-decoration: none;
+      font-family: var(--t-text-font);
+      font-size: 13px;
+      font-weight: 700;
+      color: #46548A;
+      background: #EDF1F9;
+      box-shadow: inset 3px 3px 6px rgba(120, 145, 195, .3), inset -3px -3px 6px rgba(255, 255, 255, .95);
+      transition: transform .3s cubic-bezier(.22, 1, .36, 1), background-color .3s, color .3s, box-shadow .3s;
+    }
+    .vb-q7x-nav__dot:hover,
+    .vb-q7x-nav__dot:focus-visible {
+      transform: translateY(-3px);
+      outline: none;
+    }
+    .vb-q7x-nav__dot:focus-visible { box-shadow: inset 3px 3px 6px rgba(120, 145, 195, .3), inset -3px -3px 6px rgba(255, 255, 255, .95), 0 0 0 3px rgba(127, 163, 218, .55); }
+    .vb-q7x-nav__dot.is-active {
+      background: #7FA3DA;
+      color: #FFFFFF;
+      box-shadow: 0 8px 16px rgba(127, 163, 218, .5), inset 2px 2px 5px rgba(255, 255, 255, .5), inset -3px -3px 7px rgba(72, 100, 156, .4);
+    }
+    .vb-q7x-nav__label {
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-5px);
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #F8FAFE;
+      color: #33456F;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: 8px 8px 18px rgba(74, 94, 140, .2), -4px -4px 12px rgba(255, 255, 255, .9);
+      transition: opacity .25s ease, transform .25s cubic-bezier(.22, 1, .36, 1);
+    }
+    .vb-q7x-nav__dot:hover .vb-q7x-nav__label,
+    .vb-q7x-nav__dot:focus-visible .vb-q7x-nav__label {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* --- герой --- */
+    .vb-q7x-hero {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .vb-q7x-flag {
+      position: relative;
+      width: min(840px, 86vw);
+      aspect-ratio: 2 / 1;
+      border-radius: 36px;
+      overflow: hidden;
+      transform: rotate(-1.2deg);
+      box-shadow: 26px 26px 52px rgba(59, 84, 136, .3), -12px -12px 28px rgba(255, 255, 255, .9), 0 2px 0 rgba(255, 255, 255, .6);
+      animation: vb-q7x-flagIn .9s cubic-bezier(.22, 1, .36, 1) both;
+    }
+    .vb-q7x-flag__stripes {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        #F1A6A3 0 7.1428%,
+        #FFFCFB 7.1428% 14.2857%
+      );
+    }
+    .vb-q7x-flag__canton {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 42%;
+      height: 50%;
+      background: #7FA3DA;
+      box-shadow: inset -6px -6px 16px rgba(40, 60, 110, .32), inset 5px 5px 12px rgba(255, 255, 255, .22);
+    }
+    .vb-q7x-flag__emblem {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .vb-q7x-flag::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 36px;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(255, 255, 255, .32) 0%, rgba(255, 255, 255, 0) 44%);
+      box-shadow: inset 10px 10px 22px rgba(255, 255, 255, .42), inset -14px -14px 28px rgba(46, 66, 112, .3);
+    }
+
+    .vb-q7x-title {
+      margin: clamp(30px, 5vh, 52px) 0 0;
+      font-family: var(--t-headline-font);
+      font-size: clamp(44px, 8.5vw, 64px);
+      line-height: 1;
+      letter-spacing: -0.035em;
+      color: #2C3D66;
+      text-wrap: balance;
+      text-shadow: 0 12px 26px rgba(74, 94, 140, .22), 0 1px 0 rgba(255, 255, 255, .9);
+      animation: vb-q7x-rise .8s cubic-bezier(.22, 1, .36, 1) .25s both;
+    }
+    .vb-q7x-sub {
+      margin: 16px 0 0;
+      max-width: 52ch;
+      font-size: clamp(16px, 2.2vw, 28px);
+      line-height: 1.6;
+      color: #4B5A85;
+      text-wrap: pretty;
+      animation: vb-q7x-rise .8s cubic-bezier(.22, 1, .36, 1) .35s both;
+    }
+    .vb-q7x-btn:hover,
+    .vb-q7x-btn:focus-visible {
+      transform: translateY(-4px);
+      outline: none;
+      box-shadow: 16px 18px 30px rgba(196, 120, 118, .48), -8px -8px 18px rgba(255, 255, 255, .95), inset 4px 4px 10px rgba(255, 255, 255, .6), inset -6px -6px 14px rgba(180, 95, 95, .32);
+    }
+    .vb-q7x-btn:focus-visible { box-shadow: 16px 18px 30px rgba(196, 120, 118, .48), 0 0 0 4px rgba(127, 163, 218, .6); }
+    .vb-q7x-btn:active { transform: translateY(1px); }
+
+    @keyframes vb-q7x-flagIn {
+      from { opacity: 0; transform: translateY(30px) rotate(-5deg) scale(.95); }
+      to { opacity: 1; transform: rotate(-1.2deg) scale(1); }
+    }
+    @keyframes vb-q7x-rise {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      .vb-q7x { padding-top: 96px; }
+      .vb-q7x-nav { top: 10px; gap: 5px; padding: 6px; }
+      .vb-q7x-nav__dot { width: 30px; height: 30px; font-size: 12px; }
+      .vb-q7x-flag { border-radius: 26px; }
+      .vb-q7x-flag::after { border-radius: 26px; }
+      .vb-q7x__orb--red { width: 90px; height: 90px; top: 12%; left: -20px; }
+      .vb-q7x__orb--blue { display: none; }
+      .vb-q7x__orb--gold { width: 66px; height: 66px; bottom: 8%; right: -14px; }
+    }
+
+    @media (max-width: 380px) {
+      .vb-q7x-nav__dot { width: 27px; height: 27px; font-size: 11px; }
+      .vb-q7x-btn { padding: 14px 24px; font-size: 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .vb-q7x-flag,
+      .vb-q7x-title,
+      .vb-q7x-sub,
+      .vb-q7x-btn { animation: none; }
+      .vb-q7x-nav__dot,
+      .vb-q7x-nav__label,
+      .vb-q7x-btn { transition: none; }
+      .vb-q7x-nav__dot:hover,
+      .vb-q7x-btn:hover,
+      .vb-q7x-btn:focus-visible { transform: none; }
+    }
+  </style>
+
+  <nav class="vb-q7x-nav" aria-label="Навигация по страницам">
+    <a class="vb-q7x-nav__dot is-active" href="#vb-q7x" aria-current="true"><span aria-hidden="true">1</span><span class="vb-q7x-nav__label">Флаг</span></a>
+    <a class="vb-q7x-nav__dot" href="#vb-d4n"><span aria-hidden="true">2</span><span class="vb-q7x-nav__label">Приветствие</span></a>
+    <a class="vb-q7x-nav__dot" href="#vb-k8p"><span aria-hidden="true">3</span><span class="vb-q7x-nav__label">Страница 3</span></a>
+    <a class="vb-q7x-nav__dot" href="#vb-m3w"><span aria-hidden="true">4</span><span class="vb-q7x-nav__label">Страница 4</span></a>
+    <a class="vb-q7x-nav__dot" href="#vb-t7c"><span aria-hidden="true">5</span><span class="vb-q7x-nav__label">Страница 5</span></a>
+  </nav>
+
+  <span class="vb-q7x__orb vb-q7x__orb--red" aria-hidden="true"></span>
+  <span class="vb-q7x__orb vb-q7x__orb--gold" aria-hidden="true"></span>
+  <span class="vb-q7x__orb vb-q7x__orb--blue" aria-hidden="true"></span>
+
+  <div class="vb-q7x-hero">
+    <div class="vb-q7x-flag" role="img" aria-label="Флаг Малайзии: четырнадцать красно-белых полос, синий кантон с жёлтым полумесяцем и четырнадцатиконечной звездой">
+      <div class="vb-q7x-flag__stripes"></div>
+      <div class="vb-q7x-flag__canton">
+        <svg class="vb-q7x-flag__emblem" viewBox="0 0 160 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+          <defs>
+            <mask id="vb-q7x-crescent">
+              <rect width="160" height="100" fill="#000000"></rect>
+              <circle cx="52" cy="50" r="32" fill="#ffffff"></circle>
+              <circle cx="64" cy="50" r="27" fill="#000000"></circle>
+            </mask>
+          </defs>
+          <circle cx="52" cy="50" r="32" fill="#F7D183" mask="url(#vb-q7x-crescent)"></circle>
+          <circle id="vb-q7x-star-fallback" cx="110" cy="50" r="15" fill="#F7D183"></circle>
+          <polygon id="vb-q7x-star" fill="#F7D183"></polygon>
+        </svg>
+      </div>
+    </div>
+
+    <h1 class="vb-q7x-title" id="vb-q7x-title">Доклад делегации Малайзии</h1>
+    <p class="vb-q7x-sub">
+        Комитет: УНП(UNODC)
+    </p>
+    <p class="vb-q7x-sub">
+        Повестка дня: Изменение мировых рынков наркотиков под влиянием технолигий, новых веществ и глобальной нестабильности
+    </p>
+    <p class="vb-q7x-sub">
+        Страна: Малайзия
+    </p>
+    <p class="vb-q7x-sub">
+        Делегат: Шалиф Шамиль
+    </p>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById('vb-q7x');
+      if (!root) return;
+
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var dots = Array.prototype.slice.call(root.querySelectorAll('.vb-q7x-nav__dot'));
+
+      dots.forEach(function (dot) {
+        dot.addEventListener('click', function (event) {
+          var href = dot.getAttribute('href');
+          var target = href ? document.querySelector(href) : null;
+          if (!target) return;
+          event.preventDefault();
+          target.scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block: 'start' });
+        });
+      });
+
+      if ('IntersectionObserver' in window) {
+        var byId = {};
+        dots.forEach(function (dot) {
+          var href = dot.getAttribute('href');
+          if (href && href.charAt(0) === '#') byId[href.slice(1)] = dot;
+        });
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var active = byId[entry.target.id];
+            if (!active) return;
+            dots.forEach(function (dot) {
+              var on = dot === active;
+              dot.classList.toggle('is-active', on);
+              if (on) { dot.setAttribute('aria-current', 'true'); }
+              else { dot.removeAttribute('aria-current'); }
+            });
+          });
+        }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+        Object.keys(byId).forEach(function (id) {
+          var section = document.getElementById(id);
+          if (section) observer.observe(section);
+        });
+      }
+
+      /* 14-конечная звезда */
+      var star = document.getElementById('vb-q7x-star');
+      if (star && star.setAttribute) {
+        var cx = 110, cy = 50, outer = 30, inner = 13, points = [];
+        for (var i = 0; i < 28; i++) {
+          var angle = -Math.PI / 2 + (i * Math.PI / 14);
+          var radius = (i % 2 === 0) ? outer : inner;
+          points.push(
+            (cx + radius * Math.cos(angle)).toFixed(2) + ',' +
+            (cy + radius * Math.sin(angle)).toFixed(2)
+          );
+        }
+        star.setAttribute('points', points.join(' '));
+        var fallback = document.getElementById('vb-q7x-star-fallback');
+        if (fallback && fallback.parentNode) fallback.parentNode.removeChild(fallback);
+      }
+    })();
+  </script>
+</section>
+
+<!-- Секция 2: Приветствие -->
+<section id="vb-d4n" class="vb-d4n" data-vibeblock-unique-section="yes" data-section-name="Приветствие" aria-labelledby="vb-d4n-title">
+  <style>
+    .vb-d4n,
+    .vb-d4n * { box-sizing: border-box; }
+    .vb-d4n input,
+    .vb-d4n textarea,
+    .vb-d4n select { font: inherit; }
+
+    .vb-d4n {
+      position: relative;
+      min-height: 100vh;
+      scroll-margin-top: 76px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(96px, 13vh, 148px) clamp(18px, 5vw, 64px) clamp(72px, 11vh, 128px);
+      font-family: var(--t-text-font);
+      color: #4B5A85;
+      background-color: #E9EEF8;
+      background-image:
+        radial-gradient(900px 520px at 12% 18%, rgba(241, 166, 163, .38), transparent 62%),
+        radial-gradient(760px 620px at 88% 82%, rgba(127, 163, 218, .34), transparent 60%),
+        radial-gradient(620px 420px at 62% 4%, rgba(247, 209, 131, .22), transparent 65%);
+    }
+    .vb-d4n__inner { position: relative; width: 100%; max-width: 1140px; margin: 0 auto; }
+    .vb-d4n__title {
+      margin: 0;
+      font-family: var(--t-headline-font);
+      font-size: clamp(32px, 4.6vw, 54px);
+      line-height: 1.06;
+      text-align: center;
+      letter-spacing: -0.03em;
+      color: #2C3D66;
+      text-wrap: balance;
+    }
+    .vb-d4n__lead {
+      margin: 14px 0 0;
+      max-width: 62ch;
+      font-size: clamp(16px, 2vw, 19px);
+      line-height: 1.6;
+      text-wrap: pretty;
+    }
+    .vb-d4n__grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 26px;
+      margin-top: clamp(34px, 5vh, 54px);
+    }
+    .vb-d4n__grid > *:nth-child(even) { margin-top: 60px; }
+
+    .vb-d4n-card {
+      position: relative;
+      padding: clamp(20px, 3vw, 30px);
+      border-radius: 32px;
+      background: #F8FAFE;
+      box-shadow: 14px 14px 30px rgba(74, 94, 140, .18), -8px -8px 20px rgba(255, 255, 255, .95), inset 5px 5px 12px rgba(255, 255, 255, .9), inset -7px -7px 16px rgba(120, 145, 195, .18);
+      transition: transform .4s cubic-bezier(.22, 1, .36, 1), box-shadow .4s cubic-bezier(.22, 1, .36, 1);
+    }
+    .vb-d4n-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 18px 22px 38px rgba(74, 94, 140, .22), -8px -8px 20px rgba(255, 255, 255, .95), inset 5px 5px 12px rgba(255, 255, 255, .9), inset -7px -7px 16px rgba(120, 145, 195, .18);
+    }
+    .vb-d4n-card__plus {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #F1A6A3;
+      color: #7A3A37;
+      font-size: 19px;
+      line-height: 1;
+      font-weight: 700;
+      box-shadow: 6px 6px 12px rgba(196, 120, 118, .4), inset 3px 3px 6px rgba(255, 255, 255, .6), inset -3px -3px 7px rgba(180, 95, 95, .35);
+    }
+    .vb-d4n-card__title {
+      margin: 0;
+      padding-right: 44px;
+      font-family: var(--t-headline-font);
+      font-size: clamp(19px, 2.4vw, 28px);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: #2C3D66;
+      text-wrap: balance;
+    }
+    .vb-d4n-card__slot {
+      margin-top: 16px;
+      min-height: clamp(130px, 18vh, 170px);
+      border-radius: 22px;
+      background: #EDF1F9;
+      padding-left: 15px;
+      font-size: 24px;
+      box-shadow: inset 6px 6px 13px rgba(120, 145, 195, .26), inset -5px -5px 11px rgba(255, 255, 255, .95);
+    }
+
+    @media (max-width: 720px) {
+      .vb-d4n__grid { grid-template-columns: 1fr; gap: 20px; }
+      .vb-d4n__grid > *:nth-child(even) { margin-top: 0; }
+    }
+    @media (max-width: 480px) {
+      .vb-d4n-card { padding: 18px; border-radius: 26px; }
+      .vb-d4n-card__plus { top: 14px; right: 14px; width: 28px; height: 28px; font-size: 17px; }
+      .vb-d4n-card__title { padding-right: 38px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vb-d4n-card { transition: none; }
+      .vb-d4n-card:hover { transform: none; }
+    }
+  </style>
+
+  <div class="vb-d4n__inner">
+    <header>
+      <h2 class="vb-d4n__title" id="vb-d4n-title">Приветствие</h2>
+    </header>
+
+    <div class="vb-d4n__grid">
+      <article class="vb-d4n-card">
+        <span class="vb-d4n-card__plus" aria-hidden="true"></span>
+        <h3 class="vb-d4n-card__title">Opening Speech</h3>
+        <div class="vb-d4n-card__slot">Honorable Chairs, distinguished delegates, and esteemed guests. As we gather to address the pressing global challenges of our time, let us remember that diplomacy, mutual respect, and collaboration are our greatest tools. I look forward to a productive debate and to finding sustainable solutions together. Thank you.</div>
+      </article>
+      <article class="vb-d4n-card">
+        <span class="vb-d4n-card__plus" aria-hidden="true"></span>
+        <h3 class="vb-d4n-card__title">Приветствие</h3>
+        <div class="vb-d4n-card__slot">Honorable Mesa Directiva, distinguidos delegados y estimados invitados. Al reunirnos para abordar los desafíos globales más apremiantes de nuestro tiempo, recordemos que la diplomacia, el respeto mutuo y la colaboración son nuestras mejores herramientas. Espero que tengamos un debate productivo y que encontremos soluciones sostenibles juntos. Muchas gracias.</div>
+      </article>
+      <article class="vb-d4n-card">
+        <span class="vb-d4n-card__plus" aria-hidden="true"></span>
+        <h3 class="vb-d4n-card__title">Discurso de apertura </h3>
+        <div class="vb-d4n-card__slot">Уважаемый Президиум, многоуважаемые делегаты и почтенные гости. Собираясь здесь для решения наиболее острых глобальных вызовов современности, давайте помнить, что дипломатия, взаимное уважение и сотрудничество — это наши главные инструменты. Я с нетерпением жду продуктивных дебатов и совместного поиска устойчивых решений. Благодарю за внимание</div>
+      </article>
+      <article class="vb-d4n-card">
+        <span class="vb-d4n-card__plus" aria-hidden="true"></span>
+        <h3 class="vb-d4n-card__title"> Discours d'ouverture</h3>
+        <div class="vb-d4n-card__slot">Honorable Présidence, distingués délégués et chers invités. Alors que nous nous réunissons pour aborder les défis mondiaux les plus pressants de notre époque, rappelons-nous que la diplomatie, le respect mutuel et la collaboration sont nos meilleurs outils. J'espère que nous aurons un débat productif et que nous trouverons ensemble des solutions durables. Merci de votre attention.</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Секция 3: Страница 3 -->
+<section id="vb-k8p" class="vb-k8p" data-vibeblock-unique-section="yes" data-section-name="Страница 3" aria-labelledby="vb-k8p-title">
+  <style>
+    .vb-k8p,
+    .vb-k8p * { box-sizing: border-box; }
+    .vb-k8p input,
+    .vb-k8p textarea,
+    .vb-k8p select { font: inherit; }
+
+    .vb-k8p {
+      position: relative;
+      min-height: 100vh;
+      scroll-margin-top: 76px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(96px, 13vh, 148px) clamp(18px, 5vw, 64px) clamp(72px, 11vh, 128px);
+      font-family: var(--t-text-font);
+      color: #4B5A85;
+      background-color: #E9EEF8;
+      background-image:
+        radial-gradient(900px 520px at 12% 18%, rgba(241, 166, 163, .38), transparent 62%),
+        radial-gradient(760px 620px at 88% 82%, rgba(127, 163, 218, .34), transparent 60%),
+        radial-gradient(620px 420px at 62% 4%, rgba(247, 209, 131, .22), transparent 65%);
+    }
+    .vb-k8p__inner { position: relative; width: 100%; max-width: 1140px; margin: 0 auto; }
+    .vb-k8p__title {
+      margin: 0;
+      font-family: var(--t-headline-font);
+      font-size: clamp(32px, 4.6vw, 54px);
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: #2C3D66;
+      text-align: center;
+      text-wrap: balance;
+    }
+    .vb-k8p__lead {
+      margin: 14px 0 0;
+      max-width: 62ch;
+      font-size: clamp(16px, 2vw, 24px);
+      line-height: 1.6;
+      text-align: center;
+      text-wrap: pretty;
+      margin-left: 190px;
+    }
+    .vb-k8p__grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 26px;
+      margin-top: clamp(34px, 5vh, 54px);
+    }
+    .vb-k8p__grid > *:nth-child(even) { margin-top: 60px; }
+
+    .vb-k8p-card {
+      position: relative;
+      padding: clamp(20px, 3vw, 30px);
+      border-radius: 32px;
+      background: #F8FAFE;
+      box-shadow: 14px 14px 30px rgba(74, 94, 140, .18), -8px -8px 20px rgba(255, 255, 255, .95), inset 5px 5px 12px rgba(255, 255, 255, .9), inset -7px -7px 16px rgba(120, 145, 195, .18);
+      transition: transform .4s cubic-bezier(.22, 1, .36, 1), box-shadow .4s cubic-bezier(.22, 1, .36, 1);
+    }
+    .vb-k8p-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 18px 22px 38px rgba(74, 94, 140, .22), -8px -8px 20px rgba(255, 255, 255, .95), inset 5px 5px 12px rgba(255, 255, 255, .9), inset -7px -7px 16px rgba(120, 145, 195, .18);
+    }
+    .vb-k8p-card__plus {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #7FA3DA;
+      color: #FFFFFF;
+      font-size: 19px;
+      line-height: 1;
+      font-weight: 700;
+      box-shadow: 6px 6px 12px rgba(96, 126, 184, .45), inset 3px 3px 6px rgba(255, 255, 255, .5), inset -3px -3px 7px rgba(72, 100, 156, .4);
+    }
+    .vb-k8p-card__title {
+      margin: 0;
+      padding-right: 44px;
+      font-family: var(--t-headline-font);
+      font-size: clamp(19px, 2.4vw, 28px);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: #2C3D66;
+      text-wrap: balance;
+    }
+    .vb-k8p-card__slot {
+      margin-top: 16px;
+      min-height: clamp(130px, 18vh, 170px);
+      border-radius: 22px;
+      font-size: 22px;
+      padding-left: 12px;
+      margin-top: 25px;
+      background: #EDF1F9;
+      box-shadow: inset 6px 6px 13px rgba(120, 145, 195, .26), inset -5px -5px 11px rgba(255, 255, 255, .95);
+    }
+
+    @media (max-width: 720px) {
+      .vb-k8p__grid { grid-template-columns: 1fr; gap: 20px; }
+      .vb-k8p__grid > *:nth-child(even) { margin-top: 0; }
+    }
+    @media (max-width: 480px) {
+      .vb-k8p-card { padding: 18px; border-radius: 26px; }
+      .vb-k8p-card__plus { top: 14px; right: 14px; width: 28px; height: 28px; font-size: 17px; }
+      .vb-k8p-card__title { padding-right: 38px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vb-k8p-card { transition: none; }
+      .vb-k8p-card:hover { transform: none; }
+    }
+  </style>
+
+  <div class="vb-k8p__inner">
+    <header>
+      <h2 class="vb-k8p__title" id="vb-k8p-title">Проблемы на данный момент</h2>
+      <p class="vb-k8p__lead">Малайзия остается важным транзитным узлом и рынком сбыта для международных синдикатов по обороту наркотиков (особенно синтетических)</p>
+    </header>
+
+    <div class="vb-k8p__grid">
+      <article class="vb-k8p-card">
+        <span class="vb-k8p-card__plus" aria-hidden="true"></span>
+        <h3 class="vb-k8p-card__title">Влияние цифровых технологий Смещение рынков в онлайн-сферу</h3>
+        <div class="vb-k8p-card__slot">По данным УНП ООН, синдикаты активно используют даркнет, зашифрованные мессенджеры и криптовалюты для координации оптовых поставок. Бесконтактный сбыт: С использованием цифровых платформ преступные группы автоматизируют розничные продажи, полностью скрывая отслеживание транзакций и финансовых потоков правоохранительными органами.</div>
+      </article>
+      <article class="vb-k8p-card">
+        <span class="vb-k8p-card__plus" aria-hidden="true"></span>
+        <h3 class="vb-k8p-card__title">Экспансия синтетических веществ Доминирование метамфетамина и экстази</h3>
+        <div class="vb-k8p-card__slot">Согласно докладу УНП ООН «Синтетические наркотики в Восточной и Юго-Восточной Азии 2026», региональные изъятия метамфетамина в 2025 году достигли рекордных 349 тонн. Новые психоактивные вещества (НПВ): Наблюдается лавинообразный рост рынка, в частности, зафиксировано резкое увеличение изъятий кетамина в регионе на 185 процентов до 52,5 тонн.</div>
+      </article>
+      <article class="vb-k8p-card">
+        <span class="vb-k8p-card__plus" aria-hidden="true"></span>
+        <h3 class="vb-k8p-card__title">Уязвимость транзитных маршрутов Географические риски</h3>
+        <div class="vb-k8p-card__slot">Близость к Золотому треугольнику делает Малайзию ключевым логистическим хабом, где в 2025 году официальные службы зафиксировали рекордные изъятия кристаллического метамфетамина в объеме 44,6 тонн. Использование инфраструктуры: Разветвленные морские порты и береговые линии активно эксплуатируются для отправки многотонных грузов на коммерческих и рыболовных судах в третьи страны.</div>
+      </article>
+      <article class="vb-k8p-card">
+        <span class="vb-k8p-card__plus" aria-hidden="true"></span>
+        <h3 class="vb-k8p-card__title">Факторы глобальной нестабильности Влияние внешних кризисов</h3>
+        <div class="vb-k8p-card__slot">Экономические потрясения в нижнем течении реки Меконг и Шанском государстве Мьянмы ослабляют локальный контроль и подталкивают преступные сети к более глубокой интеграции с кибермошенничеством. Рост теневого сектора: По оценкам транснационального исследования угроз, стоимость нелегального рынка метамфетамина и кетамина в Юго-Восточной Азии достигла критических масштабов от 75 до 109,7 миллиардов долларов США в 2025 году.</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Секция 4: Страница 4 -->
+<section id="vb-m3w" class="vb-m3w" data-vibeblock-unique-section="yes" data-section-name="Страница 4" aria-labelledby="vb-m3w-title">
+  <style>
+    .vb-m3w,
+    .vb-m3w * { box-sizing: border-box; }
+    .vb-m3w input,
+    .vb-m3w textarea,
+    .vb-m3w select { font: inherit; }
+
+    .vb-m3w {
+      position: relative;
+      min-height: 100vh;
+      scroll-margin-top: 76px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(96px, 13vh, 148px) clamp(18px, 5vw, 64px) clamp(72px, 11vh, 128px);
+      font-family: var(--t-text-font);
+      color: #4B5A85;
+      background-color: #E9EEF8;
+      background-image:
+        radial-gradient(900px 520px at 12% 18%, rgba(241, 166, 163, .38), transparent 62%),
+        radial-gradient(760px 620px at 88% 82%, rgba(127, 163, 218, .34), transparent 60%),
+        radial-gradient(620px 420px at 62% 4%, rgba(247, 209, 131, .22), transparent 65%);
+    }
+    .vb-m3w__inner { position: relative; width: 100%; max-width: 1140px; margin: 0 auto; }
+    .vb-m3w__title {
+      margin: 0;
+      font-family: var(--t-headline-font);
+      font-size: clamp(32px, 4.6vw, 54px);
+      line-height: 1.06;
+      text-align: center;
+      letter-spacing: -0.03em;
+      color: #2C3D66;
+      text-wrap: balance;
+    }
+    .vb-m3w__grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 26px;
+      margin-top: clamp(34px, 5vh, 54px);
+    }
+    .vb-m3w__grid > *:nth-child(even) { margin-top: 60px; }
+
+    .vb-m3w-card {
+      position: relative;
+      padding: clamp(20px, 3vw, 30px);
+      border-radius: 32px;
+      background: #F8FAFE;
+      box-shadow: 14px 14px 30px rgba(74, 94, 140, .18), -8px -8px 20px rgba(255, 255, 255, .95), inset 5px 5px 12px rgba(255, 255, 255, .9), inset -7px -7px 16px rgba(120, 145, 195, .18);
+      transition: transform .4s cubic-bezier(.22, 1, .36, 1), box-shadow .4s cubic-bezier(.22, 1, .36, 1);
+    }
+    .vb-m3w-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 18px 22px 38px rgba(74, 94, 140, .22), -8px -8px 20px rgba(255, 255, 255, .95), inset 5px 5px 12px rgba(255, 255, 255, .9), inset -7px -7px 16px rgba(120, 145, 195, .18);
+    }
+    .vb-m3w-card__plus {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #F7D183;
+      color: #6B5320;
+      font-size: 19px;
+      line-height: 1;
+      font-weight: 700;
+      box-shadow: 6px 6px 12px rgba(206, 165, 84, .45), inset 3px 3px 6px rgba(255, 255, 255, .6), inset -3px -3px 7px rgba(196, 152, 70, .35);
+    }
+    .vb-m3w-card__title {
+      margin: 0;
+      padding-right: 44px;
+      font-family: var(--t-headline-font);
+      font-size: clamp(19px, 2.4vw, 28px);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: #2C3D66;
+      text-wrap: balance;
+    }
+    .vb-m3w-card__slot {
+      margin-top: 16px;
+      min-height: clamp(130px, 18vh, 170px);
+      border-radius: 22px;
+      background: #EDF1F9;
+      font-size: 22px;
+      padding-left: 12px;
+      box-shadow: inset 6px 6px 13px rgba(120, 145, 195, .26), inset -5px -5px 11px rgba(255, 255, 255, .95);
+    }
+
+    @media (max-width: 720px) {
+      .vb-m3w__grid { grid-template-columns: 1fr; gap: 20px; }
+      .vb-m3w__grid > *:nth-child(even) { margin-top: 0; }
+    }
+    @media (max-width: 480px) {
+      .vb-m3w-card { padding: 18px; border-radius: 26px; }
+      .vb-m3w-card__plus { top: 14px; right: 14px; width: 28px; height: 28px; font-size: 17px; }
+      .vb-m3w-card__title { padding-right: 38px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .vb-m3w-card { transition: none; }
+      .vb-m3w-card:hover { transform: none; }
+    }
+  </style>
+
+  <div class="vb-m3w__inner">
+    <header>
+      <h2 class="vb-m3w__title" id="vb-m3w-title">Способы противодействия</h2>
+    </header>
+
+    <div class="vb-m3w__grid">
+      <article class="vb-m3w-card">
+        <span class="vb-m3w-card__plus" aria-hidden="true"></span>
+        <h3 class="vb-m3w-card__title">Кибербезопасность и противодействие цифровым наркорынкам Развитие мониторинга даркнета</h3>
+        <div class="vb-m3w-card__slot">Создание единой международной системы отслеживания шифрованного трафика на базе Data eXchange Platform (DXP) УНП ООН для блокировки финансовых каналов. Сотрудничество с IT-сектором: Внедрение алгоритмов автоматического ИИ-анализа на крупнейших цифровых платформах для выявления криптотранзакций и скоординированных действий синдикатов.</div>
+      </article>
+      <article class="vb-m3w-card">
+        <span class="vb-m3w-card__plus" aria-hidden="true"></span>
+        <h3 class="vb-m3w-card__title">Регулирование прекурсоров и контроль новых синтетических веществ Оперативное обновление списков</h3>
+        <div class="vb-m3w-card__slot">Создание гибкого международного механизма немедленного внесения химических аналогов, включая этомидат, в списки запрещенных веществ до их массового распространения. Международный надзор за химпромом: Усиление контроля за легальным оборотом сырья и жесткая цифровая маркировка прекурсоров международными ведомствами для ликвидации подпольных лабораторий.</div>
+      </article>
+      <article class="vb-m3w-card">
+        <span class="vb-m3w-card__plus" aria-hidden="true"></span>
+        <h3 class="vb-m3w-card__title">Модернизация приграничного контроля и защита транзитных узлов Технологическое переоснащение портов</h3>
+        <div class="vb-m3w-card__slot">Масштабное внедрение автоматизированных систем сканирования грузов при координации Департамента по борьбе с наркотиками (NCID). Совместные оперативные группы: Наращивание потенциала новой Малайзийской службы пограничного контроля и защиты (AKPS) для оперативного пресечения морской и сухопутной контрабанды.</div>
+      </article>
+      <article class="vb-m3w-card">
+        <span class="vb-m3w-card__plus" aria-hidden="true"></span>
+        <h3 class="vb-m3w-card__title">Стабилизация уязвимых регионов и социальная реинтеграция Программы альтернативного развития</h3>
+        <div class="vb-m3w-card__slot">Экономическая поддержка фермеров в приграничных кризисных зонах Мьянмы, где производство незаконного опиума в 2025 году превысило 1000 тонн. Декриминализация и реабилитация: Переход к созданию доступной медицинской помощи для снижения глобального спроса, учитывая, что 105 миллионов человек в Азии остаются потребителями нелегальных веществ.</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Секция 5: Страница 5 -->
+<section id="vb-t7c" class="vb-t7c" data-vibeblock-unique-section="yes" data-section-name="Страница 5" aria-labelledby="vb-t7c-title">
+  <style>
+    .vb-t7c,
+    .vb-t7c * { box-sizing: border-box; }
+    .vb-t7c input,
+    .vb-t7c textarea,
+    .vb-t7c select { font: inherit; }
+    .vb-m3w__title {
+      margin: 0;
+      font-family: var(--t-headline-font);
+      font-size: clamp(32px, 4.6vw, 54px);
+      line-height: 1.06;
+      text-align: center;
+      letter-spacing: -0.03em;
+      color: #2C3D66;
+      text-wrap: balance;
+    }
+    .vb-t7c {
+      position: relative;
+      min-height: 100vh;
+      scroll-margin-top: 76px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(96px, 13vh, 148px) clamp(18px, 5vw, 64px) clamp(72px, 11vh, 128px);
+      font-family: var(--t-text-font);
+      color: #4B5A85;
+      background-color: #E9EEF8;
+      background-image:
+        radial-gradient(900px 520px at 12% 18%, rgba(241, 166, 163, .38), transparent 62%),
+        radial-gradient(760px 620px at 88% 82%, rgba(127, 163, 218, .34), transparent 60%),
+        radial-gradient(620px 420px at 62% 4%, rgba(247, 209, 131, .22), transparent 65%);
+    }
+    .vb-t7c__inner { position: relative; width: 100%; max-width: 1140px; margin: 0 auto; }
+       
+  </style>
+
+  <div class="vb-t7c__inner">
+    <header>
+        <h1 class="vb-m3w-title">Библеография</h1>
+    </header>
+    <ul>
+        <li class="links">https://www.unodc.org/roseap/en/2026/06/regional-synthetic-drugs-report-launch/story.html</li>
+        <li class="links">https://www.unodc.org/unodc/en/data-and-analysis/world-drug-report-2026.html</li>
+        <li class="links">https://www.unodc.org/unodc/wdr/2026/asia.html</li>
+        <li class="links">https://www.un-ilibrary.org/content/periodicals/24118338</li>
+    </ul>
+  </div>
+</section>
